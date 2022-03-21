@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -31,6 +32,7 @@ public class RobotContainer {
   private final StorageSystem storageSystem = new StorageSystem();
   private final frc.robot.subsystems.Intake intake = new Intake();
   private final Controllers controllers = new Controllers();
+  //public UsbCamera camera = new UsbCamera("front Camera", 0);
   // private POVButton povButton = new POVButton(controllers.xboxController, -1);
 
   //Auto Commands
@@ -48,6 +50,8 @@ public class RobotContainer {
   
   //Chooser
   SendableChooser<Command> chooser = new SendableChooser<>();
+
+
   
   public RobotContainer() {
     driveTrain.setInverted(true);

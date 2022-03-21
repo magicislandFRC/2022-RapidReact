@@ -29,6 +29,8 @@ public class Robot extends TimedRobot {
         //CameraServer.getInstance().startAutomaticCapture(1);
         m_robotContainer = new RobotContainer();
         CameraServer.getInstance().startAutomaticCapture();
+        //m_robotContainer.camera.setBrightness(60);
+
     }
 
     /**
