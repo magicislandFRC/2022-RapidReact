@@ -26,8 +26,9 @@ public class DriveRobot extends CommandBase {
 
   @Override
   public void execute() {
-    double moveLeft = xboxController.getRawAxis(XboxController.Axis.kLeftY.value);
-    double turnRight = xboxController.getRawAxis(XboxController.Axis.kRightX.value);
+    double moveLeft = driveTrain.deadZone(xboxController.getRawAxis(XboxController.Axis.kLeftY.value));
+    double turnRight = driveTrain.deadZone(xboxController.getRawAxis(XboxController.Axis.kRightX.value));
+    
 
     double moveSpeed = moveLeft;
     double rotateSpeed = turnRight;
