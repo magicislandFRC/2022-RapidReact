@@ -37,16 +37,16 @@ public class RobotContainer {
 
   //Auto Commands
   private final Command OneBall = new AutoRoutine(
-    storageSystem, shooter, driveTrain, intake, 10, AutoMode.ONE_BALL);
+    storageSystem, shooter, driveTrain, intake, 5, AutoMode.ONE_BALL);
 
   private final Command OneBallTarmac = new AutoRoutine(
-    storageSystem, shooter, driveTrain, intake, 10, AutoMode.ONE_BALL_TARMAC);
+    storageSystem, shooter, driveTrain, intake, 5, AutoMode.ONE_BALL_TARMAC);
 
   private final Command TwoBalls = new AutoRoutine(
-    storageSystem, shooter, driveTrain, intake, 10, AutoMode.ONE_BALL_TARMAC);
+    storageSystem, shooter, driveTrain, intake, 10, AutoMode.TWO_BALLS);
 
   private final Command PickTwoBalls = new AutoRoutine(
-    storageSystem, shooter, driveTrain, intake, 10, AutoMode.PICK_TWO_BALLS);
+    storageSystem, shooter, driveTrain, intake, 5, AutoMode.PICK_TWO_BALLS);
   
   //Chooser
   SendableChooser<Command> chooser = new SendableChooser<>();
