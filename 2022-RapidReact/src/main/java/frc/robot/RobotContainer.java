@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.subsystems.Climber;
 import frc.robot.commands.ActivateStorage;
@@ -13,6 +16,7 @@ import frc.robot.commands.GrabBalls;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.StorageSystem;
 import frc.robot.commands.commandgroups.AutoRoutine;
+import frc.robot.commands.commandgroups.AutoRoutine.AutoMode;
 import frc.robot.commands.RetractClimber;
 import frc.robot.commands.Shoot;
 import frc.robot.subsystems.Intake;
@@ -29,6 +33,22 @@ public class RobotContainer {
   private final Controllers controllers = new Controllers();
   // private POVButton povButton = new POVButton(controllers.xboxController, -1);
 
+  //Auto Commands
+  private final Command OneBall = new AutoRoutine(
+    storageSystem, shooter, driveTrain, intake, 10, AutoMode.ONE_BALL);
+
+  private final Command OneBallTarmac = new AutoRoutine(
+    storageSystem, shooter, driveTrain, intake, 10, AutoMode.ONE_BALL_TARMAC);
+
+  private final Command TwoBalls = new AutoRoutine(
+    storageSystem, shooter, driveTrain, intake, 10, AutoMode.ONE_BALL_TARMAC);
+
+  private final Command PickTwoBalls = new AutoRoutine(
+    storageSystem, shooter, driveTrain, intake, 10, AutoMode.PICK_TWO_BALLS);
+  
+  //Chooser
+  SendableChooser<Command> chooser = new SendableChooser<>();
+  
   public RobotContainer() {
     driveTrain.setInverted(true);
     driveTrain.setDefaultCommand(new DriveRobot(driveTrain, controllers.xboxController0));
@@ -36,6 +56,13 @@ public class RobotContainer {
     shooter.setDefaultCommand(new Shoot(shooter, controllers));
     storageSystem.setDefaultCommand(new ActivateStorage(storageSystem, controllers.xboxController1));
     configureButtonBindings();
+
+    chooser.setDefaultOption("One ball", OneBall);
+    chooser.addOption("One ball & tarmac", OneBallTarmac);
+    chooser.addOption("Two balls", TwoBalls);
+    chooser.addOption("Pick two balls", PickTwoBalls);
+
+    SmartDashboard.putData(chooser);
   }
 
   private void configureButtonBindings() {
@@ -50,7 +77,7 @@ public class RobotContainer {
     controllers.lBumper0.whenHeld(new ExtendClimber(climber, -0.7));
   }
 
-  public ParallelCommandGroup getAutonomousCommand() {
-    return new AutoRoutine(storageSystem, shooter, driveTrain, intake, 15, AutoRoutine.AutoMode.ONE_BALL);
+  public Command getAutonomousCommand() {
+  return chooser.getSelected();
   }
 }
