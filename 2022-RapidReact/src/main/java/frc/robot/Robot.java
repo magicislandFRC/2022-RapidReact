@@ -4,14 +4,6 @@
 
 package frc.robot;
 
-import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
-
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -35,30 +27,30 @@ public class Robot extends TimedRobot {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
+        CameraServer.getInstance().startAutomaticCapture();
         
-        Thread visionThread = new Thread(
-            () -> {
-                UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-                CvSink cvSink = CameraServer.getInstance().getVideo();
-                CvSource output = CameraServer.getInstance().putVideo("Threshold", 600, 600);
+        // Thread visionThread = new Thread(
+        //     () -> {
+        //         UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+        //         CvSink cvSink = CameraServer.getInstance().getVideo();
+        //         CvSource output = CameraServer.getInstance().putVideo("Threshold", 600, 600);
 
-                Mat mat = new Mat();
+        //         Mat mat = new Mat();
 
-                while (!Thread.interrupted()) {
-                    if (cvSink.grabFrame(mat) == 0) {
-                        output.notifyError(cvSink.getError());
-                        continue;
-                    }
+        //         while (!Thread.interrupted()) {
+        //             if (cvSink.grabFrame(mat) == 0) {
+        //                 output.notifyError(cvSink.getError());
+        //                 continue;
+        //             }
 
-                    Imgproc.rectangle(
-                        mat, 
-                        new Point(0.0, 0.0),
-                        new Point(100.0, 100.0),
-                        new Scalar(255, 255, 255)
-                    );
-                }
-            }
-        )
+        //             Imgproc.rectangle(
+        //                 mat, 
+        //                 new Point(0.0, 0.0),
+        //                 new Point(100.0, 100.0),
+        //                 new Scalar(255, 255, 255)
+        //             );
+        //         }
+        
 
     }
 
