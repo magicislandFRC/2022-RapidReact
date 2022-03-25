@@ -79,22 +79,19 @@ public class DriveTrain extends SubsystemBase {
       differentialDrive.arcadeDrive(moveSpeed, rotateSpeed);
     }
 
-    public void resetEncoders(){
-      rightEncoder.reset();
-      leftEncoder.reset();
-    }
 
-    public double getRightTrueDistance() {
-      return rightEncoder.getDistance() * Constants.CONVERT_TO_DISTANCE;
+  public static double deadZone (double input){
+    if(Math.abs(input) < 0.2){
+      return 0;
+    }else if(input > 0.2){
+      //SmartDashboard.putNumber("Input pos deadzone", 1.25 * (input + 0.25));
+      return 1.25 * (input - 0.2);
+    } else {
+      //SmartDashboard.putNumber("Input neg deadzone", 1.25 * (input - 0.25));
+      return 1.25* (input + 0.2);
     }
-
-    public double getLeftTrueDistance() {
-      return leftEncoder.getDistance() * Constants.CONVERT_TO_DISTANCE;
-    }
-
-    public double getTrueDistance() {
-      return (getLeftTrueDistance() + getRightTrueDistance()) / 2;
-    }
+  }
+  
 
 
   @Override
